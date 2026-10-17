@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petualangan Panca Indra - Kelas 3 SD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #0f172a;
+            user-select: none;
+        }
+        h1, h2, h3, .font-fun {
+            font-family: 'Fredoka', cursive;
+        }
+        /* Aspect Ratio Container 16:9 */
+        .ratio-16-9-container {
+            width: 100%;
+            max-width: 1100px;
+            aspect-ratio: 16 / 9;
+            position: relative;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .bounce-gentle {
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(-3%); }
+            50% { transform: translateY(0); }
+        }
+        .pulse-glow {
+            animation: pulseGlow 2s infinite;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(251, 191, 36, 0.6); }
+            50% { box-shadow: 0 0 30px rgba(251, 191, 36, 1); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-2 sm:p-4 bg-slate-900 text-slate-800">
+
+    <div id="app-frame" class="ratio-16-9-container bg-gradient-to-br from-sky-400 via-teal-300 to-amber-200 rounded-3xl overflow-hidden flex flex-col justify-between border-4 border-amber-300 relative">
+        
+        <!-- HEADER TOOLBAR -->
+        <header class="bg-white/80 backdrop-blur-md px-6 py-3 flex justify-between items-center border-b-4 border-amber-400 z-10 shadow-sm">
+            <div class="flex items-center space-x-3">
+                <div class="bg-amber-400 text-amber-900 p-2 rounded-2xl shadow-inner font-bold text-xl flex items-center justify-center w-10 h-10">
+                    <i class="fa-solid font-bold fa-child"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-bold text-amber-900 tracking-wide leading-none">PETUALANGAN PANCA INDRA</h1>
+                    <p class="text-xs font-bold text-teal-700">IPAS FASE B • KELAS 3 SD</p>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <nav class="flex space-x-2">
+                <!-- Tombol Audio Musik Dangdut -->
+                <button id="bgm-toggle-btn" onclick="toggleBGM()" class="bg-yellow-400 hover:bg-yellow-500 text-yellow-950 font-bold px-3 py-1.5 rounded-xl text-sm transition transform active:scale-95 shadow-md flex items-center gap-1 border-2 border-yellow-200">
+                    <i id="bgm-icon" class="fa-solid fa-music"></i> <span id="bgm-text" class="hidden sm:inline">Musik: OFF</span>
+                </button>
+                <button onclick="showScreen('home-screen')" class="nav-btn bg-sky-500 hover:bg-sky-600 text-white font-bold px-3 py-1.5 rounded-xl text-sm transition transform active:scale-95 shadow-md flex items-center gap-1">
+                    <i class="fa-solid fa-house"></i> <span class="hidden sm:inline">Beranda</span>
+                </button>
+                <button onclick="showScreen('explore-screen')" class="nav-btn bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-3 py-1.5 rounded-xl text-sm transition transform active:scale-95 shadow-md flex items-center gap-1">
+                    <i class="fa-solid fa-book-open"></i> <span class="hidden sm:inline">Belajar</span>
+                </button>
+                <button onclick="showScreen('game-screen')" class="nav-btn bg-purple-500 hover:bg-purple-600 text-white font-bold px-3 py-1.5 rounded-xl text-sm transition transform active:scale-95 shadow-md flex items-center gap-1">
+                    <i class="fa-solid fa-gamepad"></i> <span class="hidden sm:inline">Main</span>
+                </button>
+                <button onclick="showScreen('quiz-screen')" class="nav-btn bg-rose-500 hover:bg-rose-600 text-white font-bold px-3 py-1.5 rounded-xl text-sm transition transform active:scale-95 shadow-md flex items-center gap-1">
+                    <i class="fa-solid fa-star"></i> <span class="hidden sm:inline">Kuis</span>
+                </button>
+                <button onclick="toggleDeveloperModal()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold px-3 py-1.5 rounded-xl text-sm transition transform active:scale-95 shadow-md flex items-center gap-1 border-2 border-amber-200">
+                    <i class="fa-solid fa-user-gear"></i> <span class="hidden sm:inline">Pengembang</span>
+                </button>
+            </nav>
+        </header>
+
+        <!-- CONTENT AREA -->
+        <main class="flex-1 relative overflow-hidden p-4 sm:p-6 flex flex-col justify-center items-center">
+
+            <!-- 1. HOME SCREEN -->
+            <section id="home-screen" class="screen-view w-full h-full flex flex-col items-center justify-center text-center">
+                <div class="bg-white/90 backdrop-blur-md p-6 sm:p-8 rounded-3xl border-4 border-white shadow-2xl max-w-2xl w-full">
+                    <span class="bg-amber-100 text-amber-800 text-xs font-extrabold px-3 py-1 rounded-full uppercase tracking-wide">Media Pembelajaran Interaktif</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-teal-800 mt-2 mb-2 font-fun">Mari Mengenal Panca Indra!</h2>
+                    <p class="text-slate-600 text-sm sm:text-base mb-6 font-medium">
+                        Halo sahabat pintar! Tahukah kamu bagaimana kita bisa melihat indahnya pemandangan, mendengar musik, dan merasakan kelezatan Makanan? Yuk pelajari bersama!
+                    </p>
+
+                    <div class="grid grid-cols-3 gap-3 sm:gap-4 mb-6">
+                        <button onclick="showScreen('explore-screen')" class="p-3 bg-gradient-to-b from-emerald-400 to-emerald-500 hover:to-emerald-600 text-white rounded-2xl shadow-lg transform hover:-translate-y-1 transition text-center">
+                            <i class="fa-solid fa-eye text-3xl mb-1 block"></i>
+                            <span class="font-bold text-xs sm:text-sm">1. Belajar Indra</span>
+                        </button>
+                        <button onclick="showScreen('game-screen')" class="p-3 bg-gradient-to-b from-purple-400 to-purple-500 hover:to-purple-600 text-white rounded-2xl shadow-lg transform hover:-translate-y-1 transition text-center">
+                            <i class="fa-solid fa-puzzle-piece text-3xl mb-1 block"></i>
+                            <span class="font-bold text-xs sm:text-sm">2. Pasang Organ</span>
+                        </button>
+                        <button onclick="showScreen('quiz-screen')" class="p-3 bg-gradient-to-b from-rose-400 to-rose-500 hover:to-rose-600 text-white rounded-2xl shadow-lg transform hover:-translate-y-1 transition text-center">
+                            <i class="fa-solid fa-trophy text-3xl mb-1 block"></i>
+                            <span class="font-bold text-xs sm:text-sm">3. Kuis Hebat</span>
+                        </button>
+                    </div>
+
+                    <button onclick="showScreen('explore-screen')" class="pulse-glow bg-amber-400 hover:bg-amber-500 text-amber-950 font-bold text-lg px-8 py-3 rounded-full shadow-lg transform active:scale-95 transition flex items-center justify-center gap-2 mx-auto">
+                        Mulai Petualangan <i class="fa-solid fa-circle-arrow-right"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- 2. EXPLORE SCREEN (BELAJAR) -->
+            <section id="explore-screen" class="screen-view hidden w-full h-full flex flex-col justify-between">
+                <div class="text-center mb-2">
+                    <h2 class="text-2xl font-bold text-teal-900 font-fun">Klik Organ Indra Untuk Mempelajarinya!</h2>
+                    <p class="text-xs text-teal-700 font-semibold">Pilih salah satu gambar di bawah ini:</p>
+                </div>
+
+                <!-- Indra Buttons Container -->
+                <div class="grid grid-cols-5 gap-2 sm:gap-4 my-auto">
+                    <!-- Mata -->
+                    <button onclick="selectOrgan('mata')" class="organ-card bg-white/90 hover:bg-amber-100 p-3 sm:p-4 rounded-2xl border-4 border-amber-300 shadow-lg flex flex-col items-center transition transform hover:scale-105">
+                        <span class="text-4xl sm:text-5xl mb-2">👁️</span>
+                        <span class="font-bold text-amber-900 text-sm sm:text-base">MATA</span>
+                        <span class="text-[10px] sm:text-xs text-slate-500 font-semibold">Penglihatan</span>
+                    </button>
+                    <!-- Telinga -->
+                    <button onclick="selectOrgan('telinga')" class="organ-card bg-white/90 hover:bg-sky-100 p-3 sm:p-4 rounded-2xl border-4 border-sky-300 shadow-lg flex flex-col items-center transition transform hover:scale-105">
+                        <span class="text-4xl sm:text-5xl mb-2">👂</span>
+                        <span class="font-bold text-sky-900 text-sm sm:text-base">TELINGA</span>
+                        <span class="text-[10px] sm:text-xs text-slate-500 font-semibold">Pendengaran</span>
+                    </button>
+                    <!-- Hidung -->
+                    <button onclick="selectOrgan('hidung')" class="organ-card bg-white/90 hover:bg-emerald-100 p-3 sm:p-4 rounded-2xl border-4 border-emerald-300 shadow-lg flex flex-col items-center transition transform hover:scale-105">
+                        <span class="text-4xl sm:text-5xl mb-2">👃</span>
+                        <span class="font-bold text-emerald-900 text-sm sm:text-base">HIDUNG</span>
+                        <span class="text-[10px] sm:text-xs text-slate-500 font-semibold">Penciuman</span>
+                    </button>
+                    <!-- Lidah -->
+                    <button onclick="selectOrgan('lidah')" class="organ-card bg-white/90 hover:bg-rose-100 p-3 sm:p-4 rounded-2xl border-4 border-rose-300 shadow-lg flex flex-col items-center transition transform hover:scale-105">
+                        <span class="text-4xl sm:text-5xl mb-2">👅</span>
+                        <span class="font-bold text-rose-900 text-sm sm:text-base">LIDAH</span>
+                        <span class="text-[10px] sm:text-xs text-slate-500 font-semibold">Pengecap</span>
+                    </button>
+                    <!-- Kulit -->
+                    <button onclick="selectOrgan('kulit')" class="organ-card bg-white/90 hover:bg-purple-100 p-3 sm:p-4 rounded-2xl border-4 border-purple-300 shadow-lg flex flex-col items-center transition transform hover:scale-105">
+                        <span class="text-4xl sm:text-5xl mb-2">✋</span>
+                        <span class="font-bold text-purple-900 text-sm sm:text-base">KULIT</span>
+                        <span class="text-[10px] sm:text-xs text-slate-500 font-semibold">Pemeraba</span>
+                    </button>
+                </div>
+
+                <!-- Info Box Display -->
+                <div id="organ-info-box" class="bg-white/95 rounded-2xl p-4 border-2 border-teal-400 shadow-xl flex items-center space-x-4 min-h-[100px]">
+                    <div id="organ-info-icon" class="text-5xl bg-amber-100 p-3 rounded-2xl flex-shrink-0">
+                        ✨
+                    </div>
+                    <div>
+                        <h3 id="organ-info-title" class="text-lg sm:text-xl font-bold text-teal-800">Klik salah satu tombol di atas!</h3>
+                        <p id="organ-info-desc" class="text-xs sm:text-sm text-slate-600 font-medium mt-1">
+                            Kamu dapat mengetahui letak indra di tubuh beserta fungsinya untuk kehidupan sehari-hari.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. GAME SCREEN (MEMASANGKAN LETAK INDRA) -->
+            <section id="game-screen" class="screen-view hidden w-full h-full flex flex-col justify-between">
+                <div class="text-center">
+                    <h2 class="text-xl sm:text-2xl font-bold text-purple-900 font-fun">Tarik & Pasangkan Organ ke Letaknya!</h2>
+                    <p class="text-xs text-purple-700 font-semibold">Klik/Tarik nama indra di sebelah kiri, lalu tempatkan di lokasi tubuh yang tepat!</p>
+                </div>
+
+                <div class="flex-1 my-2 flex items-center justify-around bg-white/60 backdrop-blur-sm rounded-2xl p-2 sm:p-4 border-2 border-purple-200">
+                    
+                    <!-- Left: Draggable Organ Options -->
+                    <div class="flex flex-col space-y-2 w-1/3">
+                        <div id="drag-mata" draggable="true" ondragstart="drag(event)" onclick="selectGameOrgan('mata')" class="drag-item cursor-pointer bg-white p-2 rounded-xl border-2 border-amber-400 shadow hover:bg-amber-50 flex items-center gap-2 transition">
+                            <span class="text-2xl">👁️</span> <span class="font-bold text-xs sm:text-sm text-amber-900">Mata</span>
+                        </div>
+                        <div id="drag-telinga" draggable="true" ondragstart="drag(event)" onclick="selectGameOrgan('telinga')" class="drag-item cursor-pointer bg-white p-2 rounded-xl border-2 border-sky-400 shadow hover:bg-sky-50 flex items-center gap-2 transition">
+                            <span class="text-2xl">👂</span> <span class="font-bold text-xs sm:text-sm text-sky-900">Telinga</span>
+                        </div>
+                        <div id="drag-hidung" draggable="true" ondragstart="drag(event)" onclick="selectGameOrgan('hidung')" class="drag-item cursor-pointer bg-white p-2 rounded-xl border-2 border-emerald-400 shadow hover:bg-emerald-50 flex items-center gap-2 transition">
+                            <span class="text-2xl">👃</span> <span class="font-bold text-xs sm:text-sm text-emerald-900">Hidung</span>
+                        </div>
+                        <div id="drag-lidah" draggable="true" ondragstart="drag(event)" onclick="selectGameOrgan('lidah')" class="drag-item cursor-pointer bg-white p-2 rounded-xl border-2 border-rose-400 shadow hover:bg-rose-50 flex items-center gap-2 transition">
+                            <span class="text-2xl">👅</span> <span class="font-bold text-xs sm:text-sm text-rose-900">Lidah</span>
+                        </div>
+                        <div id="drag-kulit" draggable="true" ondragstart="drag(event)" onclick="selectGameOrgan('kulit')" class="drag-item cursor-pointer bg-white p-2 rounded-xl border-2 border-purple-400 shadow hover:bg-purple-50 flex items-center gap-2 transition">
+                            <span class="text-2xl">✋</span> <span class="font-bold text-xs sm:text-sm text-purple-900">Kulit (Tangan)</span>
+                        </div>
+                    </div>
+
+                    <!-- Center: Body Canvas Mapping -->
+                    <div class="relative w-1/3 h-full flex justify-center items-center bg-sky-100/50 rounded-2xl border-2 border-dashed border-sky-300 min-h-[220px]">
+                        <!-- Simple Vector Child Body Placeholder -->
+                        <div class="text-center relative">
+                            <i class="fa-solid fa-child-reaching text-slate-400 text-9xl"></i>
+
+                            <!-- Target Drop Zones -->
+                            <div ondrop="drop(event, 'mata')" ondragover="allowDrop(event)" onclick="clickDrop('mata')" class="drop-zone absolute top-3 left-1/2 -translate-x-1/2 w-10 h-6 border-2 border-dashed border-amber-500 bg-white/80 rounded-md flex items-center justify-center text-[10px] font-bold text-amber-700 cursor-pointer">
+                                Mata
+                            </div>
+                            <div ondrop="drop(event, 'telinga')" ondragover="allowDrop(event)" onclick="clickDrop('telinga')" class="drop-zone absolute top-6 -left-3 w-8 h-6 border-2 border-dashed border-sky-500 bg-white/80 rounded-md flex items-center justify-center text-[10px] font-bold text-sky-700 cursor-pointer">
+                                Telinga
+                            </div>
+                            <div ondrop="drop(event, 'hidung')" ondragover="allowDrop(event)" onclick="clickDrop('hidung')" class="drop-zone absolute top-9 left-1/2 -translate-x-1/2 w-8 h-5 border-2 border-dashed border-emerald-500 bg-white/80 rounded-md flex items-center justify-center text-[10px] font-bold text-emerald-700 cursor-pointer">
+                                Hidung
+                            </div>
+                            <div ondrop="drop(event, 'lidah')" ondragover="allowDrop(event)" onclick="clickDrop('lidah')" class="drop-zone absolute top-14 left-1/2 -translate-x-1/2 w-8 h-5 border-2 border-dashed border-rose-500 bg-white/80 rounded-md flex items-center justify-center text-[10px] font-bold text-rose-700 cursor-pointer">
+                                Lidah
+                            </div>
+                            <div ondrop="drop(event, 'kulit')" ondragover="allowDrop(event)" onclick="clickDrop('kulit')" class="drop-zone absolute top-20 -right-6 w-10 h-8 border-2 border-dashed border-purple-500 bg-white/80 rounded-md flex items-center justify-center text-[10px] font-bold text-purple-700 cursor-pointer">
+                                Kulit
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Game Status / Guidance -->
+                    <div class="w-1/4 bg-white/80 p-3 rounded-xl border border-purple-200 text-center flex flex-col justify-between h-full">
+                        <div>
+                            <h4 class="font-bold text-xs text-purple-900 mb-1">Status Pemasangan:</h4>
+                            <div id="game-status" class="text-xs text-slate-600">
+                                Belum dipasangkan: <span id="remaining-count" class="font-bold text-purple-600">5</span>
+                            </div>
+                        </div>
+                        <div id="game-feedback" class="my-auto text-xs font-semibold text-slate-700 p-2 rounded-lg bg-purple-50">
+                            Pilih organ lalu klik target kotak pada tubuh!
+                        </div>
+                        <button onclick="resetGame()" class="bg-amber-400 hover:bg-amber-500 text-amber-950 font-bold text-xs py-1.5 px-3 rounded-lg shadow transition">
+                            <i class="fa-solid fa-rotate-left"></i> Ulangi
+                        </button>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- 4. QUIZ SCREEN -->
+            <section id="quiz-screen" class="screen-view hidden w-full h-full flex flex-col justify-between">
+                <!-- Quiz Header -->
+                <div class="flex justify-between items-center bg-white/80 px-4 py-2 rounded-xl border border-rose-200">
+                    <div>
+                        <span class="text-xs font-bold text-rose-600">KUIS PANCA INDRA</span>
+                        <h3 id="quiz-progress" class="text-sm font-bold text-slate-800">Soal 1 dari 5</h3>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-bold text-slate-600">Skor:</span>
+                        <span id="quiz-score" class="text-lg font-black text-emerald-600 bg-emerald-100 px-3 py-0.5 rounded-full">0</span>
+                    </div>
+                </div>
+
+                <!-- Quiz Card -->
+                <div class="bg-white/95 rounded-2xl p-4 sm:p-6 border-2 border-rose-300 shadow-xl my-auto flex flex-col justify-between min-h-[220px]">
+                    <div class="mb-4">
+                        <h2 id="quiz-question" class="text-base sm:text-lg font-bold text-slate-800 mb-2">
+                            Loading pertanyaan...
+                        </h2>
+                    </div>
+
+                    <!-- Answer Options -->
+                    <div id="quiz-options" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <!-- Options generated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Quiz Control Footer -->
+                <div class="flex justify-between items-center">
+                    <p class="text-xs font-bold text-teal-800 bg-white/60 px-3 py-1 rounded-lg">
+                        💡 Pilihlah jawaban yang paling tepat!
+                    </p>
+                    <button id="next-quiz-btn" onclick="nextQuestion()" class="hidden bg-rose-500 hover:bg-rose-600 text-white font-bold text-sm px-5 py-2 rounded-xl shadow transition">
+                        Lanjut <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- FOOTER BAR -->
+        <footer class="bg-slate-800 text-white/80 px-6 py-2 flex justify-between items-center text-[11px]">
+            <div>
+                SDN KOWEL 3 • Pembelajaran IPAS FASE B
+            </div>
+            <div class="flex items-center gap-1 font-semibold text-amber-300">
+                <span>Pengembang: Moh. Arifin</span>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- MODAL POPUP UMPAN BALIK / FEEDBACK -->
+    <div id="feedback-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
+        <div id="modal-card" class="bg-white rounded-3xl border-4 p-6 max-w-sm w-full text-center shadow-2xl transform transition-all scale-95">
+            <div id="modal-icon" class="text-6xl mb-3">🎉</div>
+            <h3 id="modal-title" class="text-2xl font-black mb-2">Luar Biasa!</h3>
+            <p id="modal-message" class="text-slate-600 text-sm font-semibold mb-6">Jawaban kamu sangat tepat sekali!</p>
+            <button onclick="closeModal()" id="modal-btn" class="w-full bg-amber-400 hover:bg-amber-500 text-amber-950 font-bold py-2.5 rounded-xl shadow transition">
+                Lanjutkan
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL PENGEMBANG -->
+    <div id="developer-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-3xl border-4 border-amber-400 p-6 max-w-md w-full text-center shadow-2xl relative">
+            <button onclick="toggleDeveloperModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 font-bold text-xl">
+                ✕
+            </button>
+            <div class="w-20 h-20 bg-amber-200 rounded-full mx-auto flex items-center justify-center text-amber-800 text-4xl mb-3 border-2 border-amber-400 shadow-inner">
+                👨‍🏫
+            </div>
+            <h3 class="text-2xl font-black text-slate-800 mb-1">Informasi Pengembang</h3>
+            <div class="bg-amber-50 rounded-2xl p-4 my-4 text-left border border-amber-200 space-y-2">
+                <p class="text-xs text-slate-500">Nama Guru / Pengembang:</p>
+                <p class="text-base font-bold text-amber-900">Moh. Arifin, S.Pd.</p>
+                <hr class="border-amber-200">
+                <p class="text-xs text-slate-500">Unit Kerja:</p>
+                <p class="text-sm font-bold text-slate-700">SDN KOWEL 3</p>
+                <hr class="border-amber-200">
+                <p class="text-xs text-slate-500">Mata Pelajaran / Sasaran:</p>
+                <p class="text-sm font-bold text-slate-700">IPAS - Fase B (Kelas 3 SD)</p>
+            </div>
+            <p class="text-xs text-slate-500 italic mb-4">"Media pembelajaran interaktif dirancang untuk mempermudah pemahaman konsep dasar Panca Indra secara menyenangkan."</p>
+            <button onclick="toggleDeveloperModal()" class="w-full bg-amber-400 hover:bg-amber-500 text-amber-950 font-bold py-2 rounded-xl shadow transition">
+                Tutup
+            </button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Synthesizer Audio Musik Dangdut Ceria menggunakan Web Audio API
+        let audioCtx = null;
+        let isPlayingBGM = false;
+        let bgmTimer = null;
+        let noteIndex = 0;
+
+        // Melodi & Rhythm Dangdut Sederhana (Ceria)
+        const dangdutNotes = [
+            { note: 523.25, duration: 0.15 }, // C5
+            { note: 587.33, duration: 0.15 }, // D5
+            { note: 659.25, duration: 0.15 }, // E5
+            { note: 698.46, duration: 0.25 }, // F5
+            { note: 659.25, duration: 0.15 }, // E5
+            { note: 587.33, duration: 0.15 }, // D5
+            { note: 523.25, duration: 0.30 }, // C5
+            { note: 392.00, duration: 0.15 }, // G4
+            { note: 440.00, duration: 0.15 }, // A4
+            { note: 493.88, duration: 0.15 }, // B4
+            { note: 523.25, duration: 0.35 }  // C5
+        ];
+
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playDangdutNote(freq, duration) {
+            if (!audioCtx || !isPlayingBGM) return;
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'triangle'; // Suara cerah & ceria
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+            // Envelope
+            gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + duration);
+
+            // Suara Kendang / Tabla Dangdut (Tak & Dung Effect)
+            if (noteIndex % 2 === 0) {
+                playKendangSound(180, 'dung'); // Tak / Dung
+            } else if (noteIndex % 3 === 0) {
+                playKendangSound(90, 'tung');
+            }
+        }
+
+        function playKendangSound(freq, type) {
+            if (!audioCtx || !isPlayingBGM) return;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(30, audioCtx.currentTime + 0.12);
+
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.12);
+        }
+
+        function stepBGM() {
+            if (!isPlayingBGM) return;
+            const current = dangdutNotes[noteIndex];
+            playDangdutNote(current.note, current.duration);
+            noteIndex = (noteIndex + 1) % dangdutNotes.length;
+            bgmTimer = setTimeout(stepBGM, current.duration * 1000 + 100);
+        }
+
+        function toggleBGM() {
+            initAudio();
+            isPlayingBGM = !isPlayingBGM;
+
+            const btn = document.getElementById('bgm-toggle-btn');
+            const icon = document.getElementById('bgm-icon');
+            const text = document.getElementById('bgm-text');
+
+            if (isPlayingBGM) {
+                btn.classList.remove('bg-yellow-400', 'text-yellow-950');
+                btn.classList.add('bg-emerald-500', 'text-white');
+                icon.className = 'fa-solid fa-music animate-spin';
+                text.innerText = 'Musik: ON';
+                stepBGM();
+            } else {
+                btn.classList.remove('bg-emerald-500', 'text-white');
+                btn.classList.add('bg-yellow-400', 'text-yellow-950');
+                icon.className = 'fa-solid fa-music';
+                text.innerText = 'Musik: OFF';
+                if (bgmTimer) clearTimeout(bgmTimer);
+            }
+        }
+
+        // Data Panca Indra
+        const indraData = {
+            mata: {
+                title: "Mata (Indra Penglihatan)",
+                icon: "👁️",
+                desc: "Mata berada di wajah bagian atas. Fungsi mata adalah untuk **melihat** warna, bentuk, serta keindahan alam di sekitar kita."
+            },
+            telinga: {
+                title: "Telinga (Indra Pendengaran)",
+                icon: "👂",
+                desc: "Telinga berada di samping kepala kanan dan kiri. Fungsinya untuk **mendengar** suara, seperti suara musik, panggilan teman, dan kicauan burung."
+            },
+            hidung: {
+                title: "Hidung (Indra Penciuman)",
+                icon: "👃",
+                desc: "Hidung berada di tengah wajah. Fungsinya untuk **mencium bau**, seperti wangi bunga, aroma makanan enak, atau bau sampah."
+            },
+            lidah: {
+                title: "Lidah (Indra Pengecap)",
+                icon: "👅",
+                desc: "Lidah berada di dalam mulut. Fungsinya untuk **merasakan cita rasa** makanan/minuman seperti manis, asin, asam, dan pahit."
+            },
+            kulit: {
+                title: "Kulit (Indra Peraba)",
+                icon: "✋",
+                desc: "Kulit melapisi seluruh permukaan tubuh. Fungsinya untuk **meraba dan merasakan** panas, dingin, halus, kasar, serta rasa sakit."
+            }
+        };
+
+        // Data Soal Kuis
+        const quizData = [
+            {
+                question: "1. Bagian panca indra yang digunakan untuk mendengarkan penjelasan Guru saat belajar di kelas adalah...",
+                options: [
+                    { text: "Mata", correct: false },
+                    { text: "Telinga", correct: true },
+                    { text: "Hidung", correct: false },
+                    { text: "Lidah", correct: false }
+                ],
+                explanation: "Telinga adalah indra pendengaran untuk menangkap suara."
+            },
+            {
+                question: "2. Ketika kamu makan buah jeruk yang rasanya manis dan asam, organ panca indra yang merasakannya adalah...",
+                options: [
+                    { text: "Kulit", correct: false },
+                    { text: "Hidung", correct: false },
+                    { text: "Lidah", correct: true },
+                    { text: "Mata", correct: false }
+                ],
+                explanation: "Lidah berada di dalam mulut yang berfungsi sebagai indra pengecap rasa."
+            },
+            {
+                question: "3. Dimanakah letak organ indra penglihatan (Mata) pada tubuh kita?",
+                options: [
+                    { text: "Di samping kanan dan kiri kepala", correct: false },
+                    { text: "Di bagian wajah depan atas", correct: true },
+                    { text: "Di dalam rongga mulut", correct: false },
+                    { text: "Membungkus seluruh tangan", correct: false }
+                ],
+                explanation: "Mata terletak di bagian wajah depan atas."
+            },
+            {
+                question: "4. Ibu sedang memasak sup lezat di dapur. Kamu bisa mengetahui wangi masakan tersebut menggunakan indra...",
+                options: [
+                    { text: "Hidung (Penciuman)", correct: true },
+                    { text: "Kulit (Peraba)", correct: false },
+                    { text: "Telinga (Pendengaran)", correct: false },
+                    { text: "Mata (Penglihatan)", correct: false }
+                ],
+                explanation: "Hidung menangkap partikel aroma/bau di udara."
+            },
+            {
+                question: "5. Indra peraba (Kulit) terdapat di mana saja pada tubuh kita?",
+                options: [
+                    { text: "Hanya di telapak tangan", correct: false },
+                    { text: "Hanya di area wajah", correct: false },
+                    { text: "Di seluruh permukaan tubuh", correct: true },
+                    { text: "Hanya di bagian kaki", correct: false }
+                ],
+                explanation: "Kulit membungkus dan melapisi seluruh luar tubuh kita."
+            }
+        ];
+
+        function showScreen(screenId) {
+            const screens = document.querySelectorAll('.screen-view');
+            screens.forEach(s => s.classList.add('hidden'));
+            document.getElementById(screenId).classList.remove('hidden');
+
+            if (screenId === 'quiz-screen' && currentQuestionIndex === 0) {
+                loadQuestion();
+            }
+        }
+
+        function selectOrgan(key) {
+            const data = indraData[key];
+            if (!data) return;
+
+            document.getElementById('organ-info-icon').innerText = data.icon;
+            document.getElementById('organ-info-title').innerText = data.title;
+            
+            // Format bold text
+            let formattedDesc = data.desc.replace(/\*\*(.*?)\*\*/g, '<strong class="text-teal-700 font-bold">$1</strong>');
+            document.getElementById('organ-info-desc').innerHTML = formattedDesc;
+        }
+
+        let selectedOrganKey = null;
+        let placedCount = 0;
+
+        function selectGameOrgan(key) {
+            selectedOrganKey = key;
+            const items = document.querySelectorAll('.drag-item');
+            items.forEach(i => i.classList.remove('ring-4', 'ring-amber-400'));
+            const selectedElem = document.getElementById(`drag-${key}`);
+            if (selectedElem) {
+                selectedElem.classList.add('ring-4', 'ring-amber-400');
+            }
+            document.getElementById('game-feedback').innerText = `Kamu memilih ${key.toUpperCase()}. Sekarang klik kotak target ${key.toUpperCase()} pada gambar!`;
+        }
+
+        function clickDrop(targetKey) {
+            if (!selectedOrganKey) {
+                showModal('💡 Petunjuk', 'Pilih/Klik dulu organ di sebelah kiri sebelum menempatkannya!', 'bg-amber-100 text-amber-900', '⚠️');
+                return;
+            }
+            checkPlacement(selectedOrganKey, targetKey);
+        }
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id.replace('drag-', ''));
+        }
+
+        function drop(ev, targetKey) {
+            ev.preventDefault();
+            const organKey = ev.dataTransfer.getData("text");
+            checkPlacement(organKey, targetKey);
+        }
+
+        function checkPlacement(organKey, targetKey) {
+            if (organKey === targetKey) {
+                // Correct
+                showModal('Benar Sekali! 🎉', `Hebat! Organ ${organKey.toUpperCase()} dipasangkan pada lokasi yang tepat!`, 'bg-emerald-100 border-emerald-400 text-emerald-900', '✅');
+                
+                // Disable item
+                const dragElem = document.getElementById(`drag-${organKey}`);
+                if (dragElem) {
+                    dragElem.classList.add('opacity-40', 'pointer-events-none');
+                }
+
+                // Update placement target visual
+                const targetZones = document.querySelectorAll('.drop-zone');
+                targetZones.forEach(zone => {
+                    if (zone.innerText.toLowerCase().includes(targetKey)) {
+                        zone.classList.remove('border-dashed');
+                        zone.classList.add('bg-emerald-400', 'text-white', 'border-solid');
+                        zone.innerHTML = `${indraData[targetKey].icon} Pas!`;
+                    }
+                });
+
+                selectedOrganKey = null;
+                placedCount++;
+                document.getElementById('remaining-count').innerText = 5 - placedCount;
+
+                if (placedCount === 5) {
+                    setTimeout(() => {
+                        showModal('Selamat! 🏆', 'Kamu berhasil memasangkan SEMUA organ panca indra dengan benar pada tubuh!', 'bg-amber-100 border-amber-400 text-amber-900', '🌟');
+                    }, 1000);
+                }
+
+            } else {
+                // Incorrect
+                showModal('Kurang Tepat! 🧐', `Ups! Lokasi tersebut kurang cocok untuk ${organKey.toUpperCase()}. Coba amati lagi letaknya di tubuh dan coba lagi ya!`, 'bg-rose-100 border-rose-400 text-rose-900', '❌');
+            }
+        }
+
+        function resetGame() {
+            placedCount = 0;
+            selectedOrganKey = null;
+            document.getElementById('remaining-count').innerText = '5';
+            document.getElementById('game-feedback').innerText = 'Pilih organ lalu klik target kotak pada tubuh!';
+
+            const items = document.querySelectorAll('.drag-item');
+            items.forEach(i => i.classList.remove('opacity-40', 'pointer-events-none', 'ring-4', 'ring-amber-400'));
+
+            // Reset drop zones
+            showScreen('game-screen');
+        }
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answered = false;
+
+        function loadQuestion() {
+            answered = false;
+            document.getElementById('next-quiz-btn').classList.add('hidden');
+            const currentQuiz = quizData[currentQuestionIndex];
+
+            document.getElementById('quiz-progress').innerText = `Soal ${currentQuestionIndex + 1} dari ${quizData.length}`;
+            document.getElementById('quiz-question').innerText = currentQuiz.question;
+
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+
+            currentQuiz.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn w-full p-3 text-left rounded-xl border-2 border-slate-200 bg-white hover:bg-slate-50 font-semibold text-slate-700 text-sm sm:text-base transition flex items-center justify-between shadow-sm`;
+                btn.innerHTML = `<span>${String.fromCharCode(65 + idx)}. ${opt.text}</span> <i class="fa-regular fa-circle text-slate-300"></i>`;
+                btn.onclick = () => handleAnswer(opt, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function handleAnswer(selectedOption, buttonElem) {
+            if (answered) return;
+            answered = true;
+
+            const currentQuiz = quizData[currentQuestionIndex];
+            const allOptionBtns = document.querySelectorAll('.option-btn');
+
+            if (selectedOption.correct) {
+                score += 20;
+                document.getElementById('quiz-score').innerText = score;
+                buttonElem.classList.remove('border-slate-200', 'bg-white');
+                buttonElem.classList.add('border-emerald-500', 'bg-emerald-100', 'text-emerald-900');
+                buttonElem.querySelector('i').className = 'fa-solid fa-circle-check text-emerald-600';
+
+                showModal('Jawaban Benar! 🎉', `Pintar sekali! ${currentQuiz.explanation}`, 'bg-emerald-100 border-emerald-400 text-emerald-900', '✨');
+            } else {
+                buttonElem.classList.remove('border-slate-200', 'bg-white');
+                buttonElem.classList.add('border-rose-500', 'bg-rose-100', 'text-rose-900');
+                buttonElem.querySelector('i').className = 'fa-solid fa-circle-xmark text-rose-600';
+
+                // Highlight correct option
+                allOptionBtns.forEach(btn => {
+                    if (btn.innerText.includes(currentQuiz.options.find(o => o.correct).text)) {
+                        btn.classList.add('border-emerald-500', 'bg-emerald-50');
+                    }
+                });
+
+                showModal('Ayo Coba Lagi! 💪', `Jawabanmu belum tepat. ${currentQuiz.explanation}. Jangan patah semangat!`, 'bg-rose-100 border-rose-400 text-rose-900', '💡');
+            }
+
+            document.getElementById('next-quiz-btn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                loadQuestion();
+            } else {
+                // Finish Quiz
+                showModal('Kuis Selesai! 🏆', `Selamat! Kamu telah menyelesaikan kuis dengan total Skor: ${score}/100. Keren!`, 'bg-amber-100 border-amber-400 text-amber-900', '👑');
+                currentQuestionIndex = 0;
+                score = 0;
+                document.getElementById('quiz-score').innerText = '0';
+                showScreen('home-screen');
+            }
+        }
+
+        function showModal(title, message, colorClass, icon) {
+            const modal = document.getElementById('feedback-modal');
+            const card = document.getElementById('modal-card');
+            
+            document.getElementById('modal-title').innerText = title;
+            document.getElementById('modal-message').innerText = message;
+            document.getElementById('modal-icon').innerText = icon;
+
+            card.className = `bg-white rounded-3xl border-4 p-6 max-w-sm w-full text-center shadow-2xl transform transition-all ${colorClass}`;
+            
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('feedback-modal').classList.add('hidden');
+        }
+
+        function toggleDeveloperModal() {
+            const devModal = document.getElementById('developer-modal');
+            devModal.classList.toggle('hidden');
+        }
+
+        // Initialize default view state
+        window.onload = function() {
+            showScreen('home-screen');
+            selectOrgan('mata');
+        };
+    </script>
+</body>
+</html>
